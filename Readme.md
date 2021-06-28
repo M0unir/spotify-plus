@@ -15,4 +15,4 @@ Spotify Plus is a web app to visualize personalized Spotify Data. Connect your s
 
 *(Project based on: Newline's Spotify Connected App Course)*
 
-( License )
+( MIT License )
