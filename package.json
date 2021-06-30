@@ -4,6 +4,7 @@
   "description": "web app to visualize personalized Spotify Data",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/M0unir/spotify-plus/issues"
   },
-  "homepage": "https://github.com/M0unir/spotify-plus#readme"
+  "homepage": "https://github.com/M0unir/spotify-plus#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
 }
