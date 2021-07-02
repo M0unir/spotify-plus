@@ -60,7 +60,9 @@ app.get('/redirect_callback', (req, res) => {
             if (response.status === 200) {
 
                 const { token_type, access_token } = response.data;
+                const { refresh_token } = response.data;
 
+                /** Get User Data */
                 axios.get('https://api.spotify.com/v1/me', {
                     headers: {
                         Authorization: `${token_type} ${access_token}`
@@ -68,6 +70,11 @@ app.get('/redirect_callback', (req, res) => {
                 })
                     .then(response => res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`))
                     .catch(error => res.send(error))
+
+                /** Testing Refresh Token */
+                // axios.get(`http://localhost:8080/refresh_token?refresh_token=${refresh_token}`)
+                //     .then(response => res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`))
+                //     .catch(error => res.send(error))
 
             } else {
                 res.send(response)
@@ -78,6 +85,27 @@ app.get('/redirect_callback', (req, res) => {
         })
 
 })
+
+/** Refresh Token Request */
+app.get('/refresh_token', (req, res) => {
+    const { refresh_token } = req.query;
+
+    axios.post('https://accounts.spotify.com/api/token', querystring.stringify({
+        grant_type: 'refresh_token',
+        refresh_token: refresh_token
+    }), {
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        }
+    })
+        .then(response => {
+            res.send(response.data);
+        })
+        .catch(error => {
+            res.send(error);
+        });
+});
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
