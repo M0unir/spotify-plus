@@ -1,8 +1,9 @@
 require('dotenv').config({ path: '.env.development' })
 const express = require('express');
 const querystring = require('querystring');
-const { generateRandomString } = require('./utils.js')
+const { generateRandomString } = require('./utils.js');
 const app = express();
+const axios = require('axios');
 const port = 8080;
 
 /** Getting Environment Variables */
@@ -38,8 +39,43 @@ app.get('/login', (req, res) => {
     res.redirect(`https://accounts.spotify.com/authorize?${queryparams}`)
 })
 
-app.get('/redirect', (req, res) => {
-    res.send('Logged In!')
+/** 2. Request Access & Refresh tokens */
+app.get('/redirect_callback', (req, res) => {
+    const code = req.query.code || null;
+    // Using Axios to perform a POST request for simplicity
+    axios({
+        method: 'POST',
+        url: 'https://accounts.spotify.com/api/token',
+        data: querystring.stringify({
+            grant_type: 'authorization_code',
+            redirect_uri: REDIRECT_URI,
+            code: code,
+        }),
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${new Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')}`,
+        }
+    })
+        .then(response => {
+            if (response.status === 200) {
+
+                const { token_type, access_token } = response.data;
+
+                axios.get('https://api.spotify.com/v1/me', {
+                    headers: {
+                        Authorization: `${token_type} ${access_token}`
+                    }
+                })
+                    .then(response => res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`))
+                    .catch(error => res.send(error))
+
+            } else {
+                res.send(response)
+            }
+        })
+        .catch(error => {
+            res.send(error)
+        })
 
 })
 
