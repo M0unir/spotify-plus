@@ -1,6 +1,6 @@
 require('dotenv').config({ path: '.env.development' })
 const express = require('express');
-const querystring = require('querystring');
+const qs = require('qs');
 const { generateRandomString } = require('./utils.js');
 const app = express();
 const axios = require('axios');
@@ -29,7 +29,7 @@ app.get('/login', (req, res) => {
 
     const scope = "user-read-private user-read-email";
 
-    const queryparams = querystring.stringify({
+    const queryparams = qs.stringify({
         client_id: CLIENT_ID,
         response_type: 'code',
         redirect_uri: REDIRECT_URI,
@@ -46,7 +46,7 @@ app.get('/redirect_callback', (req, res) => {
     axios({
         method: 'POST',
         url: 'https://accounts.spotify.com/api/token',
-        data: querystring.stringify({
+        data: qs.stringify({
             grant_type: 'authorization_code',
             redirect_uri: REDIRECT_URI,
             code: code,
@@ -90,7 +90,7 @@ app.get('/redirect_callback', (req, res) => {
 app.get('/refresh_token', (req, res) => {
     const { refresh_token } = req.query;
 
-    axios.post('https://accounts.spotify.com/api/token', querystring.stringify({
+    axios.post('https://accounts.spotify.com/api/token', qs.stringify({
         grant_type: 'refresh_token',
         refresh_token: refresh_token
     }), {
