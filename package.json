@@ -4,7 +4,9 @@
   "description": "web app to visualize personalized Spotify Data",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "server": "nodemon index.js",
+    "client": "cd client && yarn start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +25,7 @@
   "homepage": "https://github.com/M0unir/spotify-plus#readme",
   "dependencies": {
     "axios": "^0.22.0",
+    "concurrently": "^6.3.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "qs": "^6.10.1"
