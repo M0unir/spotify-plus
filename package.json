@@ -7,6 +7,7 @@
     "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "server": "nodemon index.js",
     "client": "cd client && yarn start",
+    "postinstall": "cd client && yarn install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
