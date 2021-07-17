@@ -21,14 +21,12 @@ app.get('/', (req, res) => {
  *  https://developer.spotify.com/documentation/general/guides/authorization-guide/ 
  * */
 
-const stateKey = "spotify_auth_state"
-
 /** 1. Request Authorization */
 app.get('/login', (req, res) => {
     const state = generateRandomString(16);
-    res.cookie(stateKey, state);
-
     const scope = "user-read-private user-read-email";
+
+    res.cookie("spotify_auth_state", state);
 
     const queryparams = qs.stringify({
         client_id: CLIENT_ID,
@@ -59,37 +57,16 @@ app.get('/redirect_callback', (req, res) => {
     })
         .then(response => {
             if (response.status === 200) {
+                const { access_token, refresh_token, expires_in } = response.data;
 
-                const { access_token, refresh_token } = response.data;
-
-                /** Redirect to React Client
-                 *  Pass queryParams 
-                 */
+                /** Redirect to React Client & Passing queryParams */
                 const queryParams = qs.stringify({
                     access_token,
-                    refresh_token
+                    refresh_token,
+                    expires_in
                 })
 
                 res.redirect(`${CLIENT_URI}?${queryParams}`)
-
-                /** 
-                 * Get User Data
-                 */
-                // axios.get('https://api.spotify.com/v1/me', {
-                //     headers: {
-                //         Authorization: `${token_type} ${access_token}`
-                //     }
-                // })
-                //     .then(response => res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`))
-                //     .catch(error => res.send(error))
-
-                /** 
-                 * Testing Refresh Token 
-                 */
-                // const { refresh_token } = response.data;
-                // axios.get(`http://localhost:8080/refresh_token?refresh_token=${refresh_token}`)
-                //     .then(response => res.send(`<pre>${JSON.stringify(response.data, null, 2)}</pre>`))
-                //     .catch(error => res.send(error))
 
             } else {
                 res.redirect(`/?${qs.stringify({ error: 'invalid token' })}`)
@@ -98,7 +75,6 @@ app.get('/redirect_callback', (req, res) => {
         .catch(error => {
             res.send(error)
         })
-
 })
 
 /** Refresh Token Request */
