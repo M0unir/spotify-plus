@@ -6,9 +6,9 @@ import './App.css';
 function App() {
   const [token, setToken] = useState(null);
 
-
   useEffect(() => {
     setToken(spotifyService.accessToken);
+    console.log('spotifyService:', spotifyService)
   }, [])
 
   return (
