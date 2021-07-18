@@ -13,6 +13,6 @@ Spotify Plus is a web app to visualize personalized Spotify Data. Connect your s
 - Node, Express, Heroku
 - React, React Router, React Hooks, Styled Components
 
-*(Project based on: Newline's Spotify Connected App Course)*
+*(Project inspired by: Newline's Spotify Connected App)*
 
 ( MIT License )
