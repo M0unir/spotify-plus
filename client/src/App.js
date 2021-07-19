@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { spotifyService } from './spotifyService';
+import { accessToken, logout } from './spotifyService';
 import logo from './logo.svg';
 import './App.css';
 
@@ -7,8 +7,7 @@ function App() {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    setToken(spotifyService.accessToken);
-    console.log('spotifyService:', spotifyService)
+    setToken(accessToken);
   }, [])
 
   return (
@@ -24,7 +23,10 @@ function App() {
             Login to Spotify
           </a>
         ) : (
-          <h2>Logged In</h2>
+          <>
+            <h2>Logged In</h2>
+            <button onClick={logout}>Logout</button>
+          </>
         )
         }
       </header>

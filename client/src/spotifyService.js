@@ -15,12 +15,24 @@ const SPOTIFY_LOCALSTORAGE_VALUES = {
 }
 
 /**
+ * Clear Spotify Tokens from localStorage & reload the page
+ * @returns {void}
+ */
+export const logout = () => {
+    console.log('logout', window.location.origin)
+    for (const property in SPOTIFY_LOCALSTORAGE_KEYS) {
+        window.localStorage.removeItem(SPOTIFY_LOCALSTORAGE_KEYS[property])
+    }
+    /** Return to Home '/' */
+    window.location = window.location.origin
+}
+
+/**
  * Get Spotify Access Token from the URL or
  * retrieve it from localStorage
  * @returns {string} Spotify Access Token
  */
-
-const getAccessToken = () => {
+export const accessToken = () => {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -52,8 +64,4 @@ const getAccessToken = () => {
 
     // For any other unhandled cases return false
     return false;
-}
-
-export const spotifyService = {
-    accessToken: getAccessToken()
 }
