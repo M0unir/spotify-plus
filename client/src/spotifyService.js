@@ -15,7 +15,7 @@ const SPOTIFY_LOCALSTORAGE_VALUES = {
 }
 
 /**
- * Clear Spotify Tokens from localStorage & reload the page
+ * Clears Spotify tokens from localStorage & reloads the page
  * @returns {void}
  */
 export const logout = () => {
@@ -28,9 +28,52 @@ export const logout = () => {
 }
 
 /**
- * Get Spotify Access Token from the URL or
- * retrieve it from localStorage
- * @returns {string} Spotify Access Token
+ * Checks if the access token has expired by comparing the time elapsed between the timestamp and now,
+ * then checks if it is over our given expiration time.
+ * @returns {boolean} True if access token has expired
+ */
+const hasTokenExpired = () => {
+    const { accessToken, expiresIn, timestamp } = SPOTIFY_LOCALSTORAGE_VALUES;
+
+    if (!accessToken || !timestamp) return false;
+
+    const millisecondsElapsed = Date.now() - Number(timestamp);
+
+    return (Math.floor(millisecondsElapsed / 1000) > Number(expiresIn))
+}
+
+/**
+ * Sends a request to our backend service to refresh our access token using the stored refresh token.
+ * Then stores the new token in localStorage & reloads the page. 
+ * @returns {void}
+ */
+const refreshToken = () => {
+    try {
+        // If no refresh token available, log the user out 
+        if (!SPOTIFY_LOCALSTORAGE_VALUES['refreshToken']
+            || SPOTIFY_LOCALSTORAGE_VALUES['refreshToken'] === 'undefined'
+            || (Date.now() - SPOTIFY_LOCALSTORAGE_VALUES['timestamp']) / 1000 < 1000) {
+            logout()
+        }
+        fetch(`/refresh_token?refresh_token=${SPOTIFY_LOCALSTORAGE_VALUES['refreshToken']}`)
+            .then(response => response.json())
+            .then(data => {
+                window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['accessToken'], data.access_token);
+                window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['timestamp'], Date.now())
+
+                // Reload the page
+                window.location = window.location.reload();
+            })
+
+    } catch (e) {
+        console.log('Could not refresh token: ', e)
+    }
+
+}
+
+/**
+ * Get Spotify Access Token from the URL or retrieve it from localStorage
+ * @returns {string} Spotify access token
  */
 export const accessToken = () => {
 
@@ -45,7 +88,9 @@ export const accessToken = () => {
     const hasError = urlParams.get('error');
 
     // If there are any errors or the access token is undefined then return
-    if (hasError || SPOTIFY_LOCALSTORAGE_VALUES['accessToken'] === 'undefined') return;
+    if (hasError || SPOTIFY_LOCALSTORAGE_VALUES['accessToken'] === 'undefined' || hasTokenExpired()) {
+        refreshToken();
+    };
 
     // If an Access Token is available in localStorage, retrieve it
     if (SPOTIFY_LOCALSTORAGE_VALUES['accessToken'] && SPOTIFY_LOCALSTORAGE_VALUES['accessToken'] !== 'undefined') {
@@ -58,6 +103,9 @@ export const accessToken = () => {
             console.log('param: ', param)
             window.localStorage.setItem(param, queryParams[param])
         }
+
+        // Setting a timestamp to check for token expiration
+        window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['timestamp'], Date.now())
 
         return queryParams[SPOTIFY_LOCALSTORAGE_KEYS['accessToken']]
     }
