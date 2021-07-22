@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 /** Mapping for localStorage Keys */
 const SPOTIFY_LOCALSTORAGE_KEYS = {
     accessToken: "spotify_access_token",
@@ -18,7 +20,7 @@ const SPOTIFY_LOCALSTORAGE_VALUES = {
  * Clears Spotify tokens from localStorage & reloads the page
  * @returns {void}
  */
-export const logout = () => {
+const logout = () => {
     console.log('logout', window.location.origin)
     for (const property in SPOTIFY_LOCALSTORAGE_KEYS) {
         window.localStorage.removeItem(SPOTIFY_LOCALSTORAGE_KEYS[property])
@@ -75,7 +77,7 @@ const refreshToken = () => {
  * Get Spotify Access Token from the URL or retrieve it from localStorage
  * @returns {string} Spotify access token
  */
-export const accessToken = () => {
+const getAccessToken = () => {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -113,3 +115,26 @@ export const accessToken = () => {
     // For any other unhandled cases return false
     return false;
 }
+
+const accessToken = getAccessToken();
+
+/**
+ *  Setting up Axios Default URL & Request Headers
+ */
+
+axios.defaults.baseURL = 'https://api.spotify.com/v1';
+axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
+axios.defaults.headers['Content-Type'] = 'application/json';
+
+/**
+ * Get Logged In User's Profile Data
+ * @returns {Promise}
+ */
+
+const getUserProfile = () => axios.get('/me')
+
+export {
+    accessToken,
+    logout,
+    getUserProfile
+};
