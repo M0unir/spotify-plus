@@ -1,4 +1,4 @@
-import axios from 'axios';
+import http from './httpService';
 
 /** Mapping for localStorage Keys */
 const SPOTIFY_LOCALSTORAGE_KEYS = {
@@ -117,21 +117,14 @@ const getAccessToken = () => {
 }
 
 const accessToken = getAccessToken();
-
-/**
- *  Setting up Axios Default URL & Request Headers
- */
-
-axios.defaults.baseURL = 'https://api.spotify.com/v1';
-axios.defaults.headers['Authorization'] = `Bearer ${accessToken}`;
-axios.defaults.headers['Content-Type'] = 'application/json';
+http.setAccessToken(accessToken);
 
 /**
  * Get Logged In User's Profile Data
  * @returns {Promise}
  */
 
-const getUserProfile = () => axios.get('/me')
+const getUserProfile = () => http.get('/me')
 
 export {
     accessToken,
