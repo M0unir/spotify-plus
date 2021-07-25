@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { accessToken, logout, getUserProfile } from './services/spotifyService';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import logo from './logo.svg';
 import './App.css';
 
@@ -22,6 +24,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         {!token ? (
