@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { accessToken, logout, getUserProfile } from './services/spotifyService';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from './logo.svg';
 import './App.css';
@@ -12,9 +12,14 @@ function App() {
 
   useEffect(() => {
     const getUser = async () => {
-      const { data } = await getUserProfile();
-      console.log('result: ', data);
-      setProfile(data);
+      try {
+        const { data } = await getUserProfile();
+        setProfile(data);
+      } catch (Exception) {
+        if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
+          toast.error(`Error: ${Exception.response.data.error.message}`);
+      }
+
     }
 
     setToken(accessToken);
