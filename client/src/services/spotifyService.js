@@ -102,7 +102,6 @@ const getAccessToken = () => {
     // If no access token is available locally then retrieve it from URL & store it in localStorage
     if (queryParams[SPOTIFY_LOCALSTORAGE_KEYS['accessToken']]) {
         for (const param in queryParams) {
-            console.log('param: ', param)
             window.localStorage.setItem(param, queryParams[param])
         }
 

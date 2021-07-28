@@ -22,7 +22,7 @@ axios.interceptors.response.use(null, error => {
     // If Expected Errors (Client Errors => 404: not found, 400: Bad Request)
     // => Display Specific Errors (Post not found etc..)
     // Handle Expected errors in Component
-    toast.error(`Expected Error Occured: ${error}`); // Temporary
+    // toast.error(`Expected Error Occured: ${error}`); // Temporary
 
     return Promise.reject(error);
 });

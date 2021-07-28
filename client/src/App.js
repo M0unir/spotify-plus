@@ -17,7 +17,7 @@ function App() {
         setProfile(data);
       } catch (Exception) {
         if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
-          toast.error(`Error: ${Exception.response.data.error.message}`);
+          toast.error(<div>Couldn't get profile data.<br />Reason: {Exception.response.data.error.message}</div>);
       }
 
     }
