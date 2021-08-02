@@ -3,8 +3,8 @@ import { accessToken, logout, getUserProfile } from './services/spotifyService';
 import { toast, ToastContainer } from 'react-toastify';
 import { Route, Switch } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-// import logo from './logo.svg';
 import styled from 'styled-components/macro';
+import { GlobalStyles } from './styles' // Epxorting Default Namespace
 
 const StyledLoginButton = styled.a`
   background-color: green;
@@ -26,6 +26,7 @@ function App() {
       try {
         const { data } = await getUserProfile();
         setProfile(data);
+        toast.success('Logged In');
       } catch (Exception) {
         if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
           toast.error(<div>Couldn't get profile data.<br />Reason: {Exception.response.data.error.message}</div>);
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyles />
       <ToastContainer />
       <header className="App-header">
       </header>
