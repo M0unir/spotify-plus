@@ -3,18 +3,8 @@ import { accessToken, logout, getUserProfile } from './services/spotifyService';
 import { toast, ToastContainer } from 'react-toastify';
 import { Route, Switch } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
-import styled from 'styled-components/macro';
-import { GlobalStyles } from './styles' // Epxorting Default Namespace
-
-const StyledLoginButton = styled.a`
-  background-color: green;
-  color: white;
-  border: 1px solid green;
-  border-radius: 10px;
-  padding: 5px 15px;
-  text-align: center;
-  display: inline-block;
-`
+import { GlobalStyles } from './styles'
+import { Login } from './pages/';
 
 function App() {
   // const { accessToken, logout, getUserProfile } = spotifyService;
@@ -34,7 +24,7 @@ function App() {
     }
 
     setToken(accessToken);
-    getUser()
+    if (accessToken) getUser()
 
   }, [])
 
@@ -45,15 +35,7 @@ function App() {
       <header className="App-header">
       </header>
       {!token ? (
-        <div className="main" style={{ display: 'block', padding: '0 10px', margin: '10px 0' }}>
-          <StyledLoginButton
-            className="App-link"
-            href="http://localhost:8080/login"
-            rel="noopener noreferrer"
-          >
-            Login to Spotify
-          </StyledLoginButton>
-        </div>
+        <Login />
       ) : (
         <>
           <Switch>

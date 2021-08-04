@@ -26,9 +26,12 @@ const GlobalStyle = createGlobalStyle`
     font-family: var(--font);
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background-color: var(--site-background-color);
-    color: var(---black);
+    background-color: var(--black);
+    color: var(--black);
     font-size: var(---body-font-size);
+    color: var(--white);
+    font-family: var(--font);
+    font-size: var(--font-size-md);
   }
 
   h1, h2, h3, h4, h5, h6 {

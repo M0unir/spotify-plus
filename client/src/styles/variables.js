@@ -3,7 +3,7 @@ import { css } from 'styled-components/macro'
 const variables = css`
   :root {
 
-    /* Light Theme */
+    /* Dark Theme */
     --site-background-color: #FFFFFF;
     --button-background: #1dd860;
     --green: #1db954;
@@ -21,7 +21,7 @@ const variables = css`
     --white: #ffffff;
     --green: #1DB954;
 
-    /* Dark Theme */
+    /* Light Theme */
     /* Later.. */
 
     --font: 'Circular Std', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
