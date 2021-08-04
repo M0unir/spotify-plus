@@ -57,11 +57,8 @@ function App() {
       ) : (
         <>
           <Switch>
-            <Route path="/top-artists" component={(props) => props.match.params}>
+            <Route path="/top-artists">
               <h1>Top Artists</h1>
-              {
-                console.log('props: ',)
-              }
             </Route>
             <Route path="/top-tracks">
               <h1>Top Tracks</h1>

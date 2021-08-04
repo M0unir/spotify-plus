@@ -21,7 +21,6 @@ const SPOTIFY_LOCALSTORAGE_VALUES = {
  * @returns {void}
  */
 const logout = () => {
-    console.log('logout', window.location.origin)
     for (const property in SPOTIFY_LOCALSTORAGE_KEYS) {
         window.localStorage.removeItem(SPOTIFY_LOCALSTORAGE_KEYS[property])
     }
