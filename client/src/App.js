@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { GlobalStyles } from './styles'
 import { Login, Profile } from './pages/';
-import { Logout } from './components/';
+import { TopBar } from './components/';
 
 function App() {
   // const { accessToken, logout, getUserProfile } = spotifyService;
@@ -21,13 +21,11 @@ function App() {
     <div className="App">
       <GlobalStyles />
       <ToastContainer />
-      <header className="App-header">
-      </header>
+      <TopBar />
       {!token ? (
         <Login />
       ) : (
         <>
-          <Logout />
           <Switch>
             <Route path="/top-artists">
               <h1>Top Artists</h1>

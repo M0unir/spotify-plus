@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUserProfile } from '../services/spotifyService';
 import { toast } from 'react-toastify';
 import { StyledHeader } from '../styles/'
+import { TopBar } from '../components/'
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -11,7 +12,7 @@ const Profile = () => {
             try {
                 const { data } = await getUserProfile();
                 setProfile(data);
-                toast.success('Logged In');
+                // toast.success('Logged In');
             } catch (Exception) {
                 if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
                     toast.error(<div>Couldn't get profile data.<br />Reason: {Exception.response.data.error.message}</div>);
@@ -26,6 +27,7 @@ const Profile = () => {
         <>
             {profile && (
                 <>
+                    <TopBar user={profile} />
                     <StyledHeader type="user">
                         <div className="header__inner">
                             {profile.images.length && profile.images[0].url && (
@@ -43,7 +45,6 @@ const Profile = () => {
                         </div>
                     </StyledHeader>
                 </>
-
             )}
         </>
     )

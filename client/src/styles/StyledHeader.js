@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-const StyledHeader = styled.header`
+const StyledHeader = styled.div`
   display: flex;
   align-items: flex-end;
   position: relative;
@@ -11,7 +11,7 @@ const StyledHeader = styled.header`
   min-height: 250px;
 
   @media (min-width: 768px) {
-    min-height: 340px;
+    min-height: 360px;
   }
 
   &:after {
