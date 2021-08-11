@@ -1,3 +1,4 @@
+import axios from 'axios';
 import http from './httpService';
 
 /** Mapping for localStorage Keys */
@@ -118,14 +119,22 @@ const accessToken = getAccessToken();
 http.setAccessToken(accessToken);
 
 /**
- * Get Logged In User's Profile Data
+ * Get logged in user's profile data
  * @returns {Promise}
  */
 
 const getUserProfile = () => http.get('/me')
 
+/** 
+ * Get current user's Playlists
+ * @returns {promise}
+ */
+
+const getUserPlaylists = (limit = 20) => axios.get(`/me/playlists?limit=${limit}`)
+
 export {
     accessToken,
     logout,
-    getUserProfile
+    getUserProfile,
+    getUserPlaylists
 };
