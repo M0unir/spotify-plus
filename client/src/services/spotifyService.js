@@ -132,9 +132,24 @@ const getUserProfile = () => http.get('/me')
 
 const getUserPlaylists = (limit = 20) => axios.get(`/me/playlists?limit=${limit}`)
 
+/**
+ * Get current user's top artists
+ * @returns {promise}
+ */
+
+const getUserTopArtists = (time_range = 'short_term') => axios.get(`/me/top/artists?time_range=${time_range}`)
+
+/** 
+ * Get current user's top tracks
+ */
+
+const getUserTopTracks = (time_range = 'short_term') => axios.get(`/me/top/tracks?time_range=${time_range}`)
+
 export {
     accessToken,
     logout,
     getUserProfile,
-    getUserPlaylists
+    getUserPlaylists,
+    getUserTopArtists,
+    getUserTopTracks
 };

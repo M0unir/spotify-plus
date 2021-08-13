@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getUserProfile, getUserPlaylists } from '../services/spotifyService';
+import { getUserProfile, getUserPlaylists, getUserTopArtists, getUserTopTracks } from '../services/spotifyService';
 import { toast } from 'react-toastify';
 import { StyledHeader } from '../styles/'
 import { TopBar } from '../components/'
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
-    const [playlists, setPlaylists] = useState({});
+    const [playlists, setPlaylists] = useState(null);
+    const [topArtists, setTopArtists] = useState(null);
+    const [topTracks, setTopTracks] = useState(null);
 
     useEffect(() => {
         const getUser = async () => {
@@ -16,7 +18,7 @@ const Profile = () => {
                 // toast.success('Logged In');
             } catch (Exception) {
                 if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
-                    toast.error(<div>Couldn't get profile data.<br />Reason: {Exception.response.data.error.message}</div>);
+                    toast.error(<div>Could not get Profile data.<br />Reason: {Exception.response.data.error.message}</div>);
             }
         }
 
@@ -26,12 +28,38 @@ const Profile = () => {
                 setPlaylists(data)
             } catch (Exception) {
                 if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500)
-                    toast.error(<div>Couldn't get Playlists data.<br />Reason: {Exception.response.data.error.message}</div>)
+                    toast.error(<div>Could not get Playlists data.<br />Reason: {Exception.response.data.error.message}</div>)
+            }
+        }
+
+        const getTopArtists = async () => {
+            try {
+                const { data } = await getUserTopArtists();
+                setTopArtists(data)
+            } catch (Exception) {
+                if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500) {
+                    const { status, data } = Exception.response;
+                    toast.error(<div>Could not get Top Artists data.<br />{data ? `Reason: ${data.error.message}` : `Code: ${status}`}</div>)
+                }
+            }
+        }
+
+        const getTopTracks = async () => {
+            try {
+                const { data } = await getUserTopTracks();
+                setTopTracks(data)
+            } catch (Exception) {
+                if (Exception.response && Exception.response.status >= 400 && Exception.response.status < 500) {
+                    const { status, data } = Exception.response;
+                    toast.error(<div>Could not get Top Tracks data.<br />{data ? `Reason: ${data.error.message}` : `Code: ${status}`}</div>)
+                }
             }
         }
 
         getUser()
         getPlaylists()
+        getTopArtists()
+        getTopTracks()
 
     }, [])
 
