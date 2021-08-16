@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUserProfile, getUserPlaylists, getUserTopArtists, getUserTopTracks } from '../services/spotifyService';
 import { toast } from 'react-toastify';
 import { StyledHeader } from '../styles/'
-import { TopBar, Section, Artists, Tracks } from '../components/'
+import { TopBar, Section, Artists, Tracks, Playlists } from '../components/'
 
 const Profile = () => {
     const [profile, setProfile] = useState(null);
@@ -85,13 +85,16 @@ const Profile = () => {
                             </div>
                         </div>
                     </StyledHeader>
-                    {topArtists && topTracks && (
+                    {topArtists && topTracks && playlists && (
                         <main>
                             <Section title="Top artists this month" small="Only visible to you" seeAllLink="/top-artists">
-                                <Artists artists={topArtists.items.slice(8)} />
+                                <Artists artists={topArtists.items.slice(0, 8)} />
                             </Section>
                             <Section title="Top Tracks this month" small="Only visible to you" seeAllLink="/top-tracks">
-                                <Tracks tracks={topTracks.items.slice(15)} />
+                                <Tracks tracks={topTracks.items.slice(0, 15)} />
+                            </Section>
+                            <Section title="Top Playlists this month" small="Only visible to you" seeAllLink="/playlists">
+                                <Playlists playlists={playlists.items.slice(0, 8)} />
                             </Section>
 
                         </main>
