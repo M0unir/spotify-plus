@@ -96,7 +96,6 @@ const Profile = () => {
                             <Section title="Top Playlists this month" small="Only visible to you" seeAllLink="/playlists">
                                 <Playlists playlists={playlists.items.slice(0, 8)} />
                             </Section>
-
                         </main>
                     )}
                 </>

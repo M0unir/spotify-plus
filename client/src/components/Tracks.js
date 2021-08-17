@@ -1,4 +1,5 @@
 import { StyledTracks } from '../styles';
+import { convertToDuration } from '../utils';
 
 const Tracks = ({ tracks }) => (
     <>
@@ -30,7 +31,7 @@ const Tracks = ({ tracks }) => (
                             {track.album.name}
                         </div>
                         <div className="track__item__duration">
-                            {track.duration_ms}
+                            {convertToDuration(track.duration_ms)}
                         </div>
                     </li>
                 ))}
