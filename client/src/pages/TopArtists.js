@@ -15,17 +15,14 @@ const TopArtists = () => {
     }, [])
 
     return (
-        <>
+        <main>
             {topArtists && (
-                <main>
-                    <Section title="Top artists this month" breadcrumb="true">
-                        <Artists artists={topArtists.items.slice(0, 15)} />
-                    </Section>
-                </main>
+                <Section title="Top artists this month" breadcrumb="true">
+                    <Artists artists={topArtists.items.slice(0, 15)} />
+                </Section>
             )
-
             }
-        </>
+        </main>
     )
 }
 
