@@ -87,13 +87,13 @@ const Profile = () => {
                     </StyledHeader>
                     {topArtists && topTracks && playlists && (
                         <main>
-                            <Section title="Top artists this month" small="Only visible to you" seeAllLink="/top-artists">
+                            <Section title="Top artists of All Time" small="Only visible to you" seeAllLink="/top-artists">
                                 <Artists artists={topArtists.items.slice(0, 8)} />
                             </Section>
-                            <Section title="Top Tracks this month" small="Only visible to you" seeAllLink="/top-tracks">
+                            <Section title="Top Tracks of All Time" small="Only visible to you" seeAllLink="/top-tracks">
                                 <Tracks tracks={topTracks.items.slice(0, 15)} />
                             </Section>
-                            <Section title="Top Playlists this month" small="Only visible to you" seeAllLink="/playlists">
+                            <Section title="Top Playlists of All Time" small="Only visible to you" seeAllLink="/playlists">
                                 <Playlists playlists={playlists.items.slice(0, 8)} />
                             </Section>
                         </main>
