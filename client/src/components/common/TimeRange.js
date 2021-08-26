@@ -1,9 +1,9 @@
-import { StyledActiveTimeRange } from "../../styles";
+import { StyledTimeRange } from "../../styles";
 
-const ActiveTimeRange = ({ activeTimeRange, setActiveTimeRange }) => {
+const TimeRange = ({ activeTimeRange, setActiveTimeRange }) => {
 
     return (
-        <StyledActiveTimeRange>
+        <StyledTimeRange>
             <li><button
                 className={activeTimeRange === 'short_term' ? 'active' : ''}
                 onClick={() => setActiveTimeRange('short_term')}>Last month</button></li>
@@ -13,8 +13,8 @@ const ActiveTimeRange = ({ activeTimeRange, setActiveTimeRange }) => {
             <li><button
                 className={activeTimeRange === 'long_term' ? 'active' : ''}
                 onClick={() => setActiveTimeRange('long_term')}>All time</button></li>
-        </StyledActiveTimeRange>
+        </StyledTimeRange>
     )
 }
 
-export default ActiveTimeRange;
+export default TimeRange;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Section, Artists, ActiveTimeRange } from '../components/'
+import { Section, Artists, TimeRange } from '../components/'
 import { getUserTopArtists } from '../services/spotifyService'
 
 const TopArtists = () => {
@@ -19,7 +19,7 @@ const TopArtists = () => {
         <main>
             {topArtists && (
                 <Section title="Top artists" breadcrumb="true">
-                    <ActiveTimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange} />
+                    <TimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange} />
                     <Artists artists={topArtists.items.slice(0, 15)} />
                 </Section>
             )

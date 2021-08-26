@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 
-const StyledActiveTimeRange = styled.ul`
+const StyledTimeRange = styled.ul`
 display: flex;
 list-style: none;
 margin: 0 0 var(--spacing-lg) 0;
@@ -36,4 +36,4 @@ li button {
 }
 `;
 
-export default StyledActiveTimeRange;
+export default StyledTimeRange;
