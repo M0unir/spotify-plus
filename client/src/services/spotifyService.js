@@ -127,10 +127,11 @@ const getUserProfile = () => http.get('/me')
 
 /** 
  * Get current user's Playlists
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-a-list-of-current-users-playlists
  * @returns {promise}
  */
 
-const getUserPlaylists = (limit = 20) => axios.get(`/me/playlists?limit=${limit}`)
+const getUserPlaylists = (limit = 10) => axios.get(`/me/playlists?limit=${limit}`)
 
 /**
  * Get current user's top artists
