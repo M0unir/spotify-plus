@@ -16,7 +16,7 @@ const Playlists = () => {
         const getPlaylists = async () => {
             const { data } = await getUserPlaylists();
             setPlaylistsData(data);
-            console.log('playlists: ', playlists);
+            // console.log('playlists: ', playlists);
         }
         getPlaylists();
 
@@ -35,13 +35,13 @@ const Playlists = () => {
         const getNextPlaylists = async () => {
             if (playlistsData.next) {
                 const { data } = await http.get(playlistsData.next)
-                console.log('playlistsNext: ', playlistsData.next, 'Next Data: ', data);
+                // console.log('playlistsNext: ', playlistsData.next, 'Next Data: ', data);
                 setPlaylistsData(data)
             }
         }
 
-        // Merge previous and newly fetched playlists and set our playlists array
-        const newPlaylists = [...playlists, ...playlistsData.items];
+        /** Merge previous and newly fetched playlists and set our playlists array. */
+        const newPlaylists = playlists => [...playlists, ...playlistsData.items];
         setPlaylists(newPlaylists)
 
         // Fetch for new playlists if available

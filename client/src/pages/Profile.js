@@ -94,7 +94,7 @@ const Profile = () => {
                                 <Tracks tracks={topTracks.items.slice(0, 15)} />
                             </Section>
                             <Section title="Top Playlists of All Time" small="Only visible to you" seeAllLink="/playlists">
-                                <PlaylistsGrid playlists={playlists.items.slice(0, 8)} />
+                                <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
                             </Section>
                         </main>
                     )}
