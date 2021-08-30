@@ -4,7 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import { Route, Switch } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { GlobalStyles } from './styles'
-import { Login, Profile, TopArtists, TopTracks, Playlists } from './pages/';
+import { Login, Profile, TopArtists, TopTracks, Playlists, Playlist } from './pages/';
 import { TopBar } from './components/';
 
 function App() {
@@ -29,9 +29,7 @@ function App() {
           <Switch>
             <Route path="/top-artists" component={TopArtists} />
             <Route path="/top-tracks" component={TopTracks} />
-            <Route path="/playlists/:id">
-              <h1>Playlist </h1>
-            </Route>
+            <Route path="/playlists/:id" component={Playlist} />
             <Route path="/playlists" component={Playlists} />
             <Route path="/" >
               <Profile />

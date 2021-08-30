@@ -1,4 +1,3 @@
-import axios from 'axios';
 import http from './httpService';
 
 /** Mapping for localStorage Keys */
@@ -131,29 +130,41 @@ const getUserProfile = () => http.get('/me')
  * @returns {promise}
  */
 
-const getUserPlaylists = (limit = 10) => axios.get(`/me/playlists?limit=${limit}`)
+const getUserPlaylists = (limit = 10) => http.get(`/me/playlists?limit=${limit}`)
+
+/**
+ * Get full details of a playlist owned by a Spotify user.
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-playlist
+ * @param {string} playlist_id spotify id of the playlist
+ * @returns {promise}
+ */
+
+const getPlaylistInfo = playlist_id => http.get(`/playlists/${playlist_id}`);
 
 /**
  * Get current user's top artists
  * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-top-artists-and-tracks
+ * @param {string=} [time_range='long_term'] - timeframe of data returned
  * @returns {promise}
  */
 
-const getUserTopArtists = (time_range = 'long_term') => axios.get(`/me/top/artists?time_range=${time_range}`)
+const getUserTopArtists = (time_range = 'long_term') => http.get(`/me/top/artists?time_range=${time_range}`)
 
 /** 
  * Get current user's top tracks
  * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-users-top-artists-and-tracks
+ * @param {string=} [time_range='long_term'] time frame of data returned
  * @returns {promise}
  */
 
-const getUserTopTracks = (time_range = 'long_term') => axios.get(`/me/top/tracks?time_range=${time_range}`)
+const getUserTopTracks = (time_range = 'long_term') => http.get(`/me/top/tracks?time_range=${time_range}`)
 
 export {
     accessToken,
     logout,
     getUserProfile,
     getUserPlaylists,
+    getPlaylistInfo,
     getUserTopArtists,
-    getUserTopTracks
+    getUserTopTracks,
 };
