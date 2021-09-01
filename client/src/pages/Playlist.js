@@ -1,22 +1,52 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom';
 import { Section, Tracks } from '../components/';
 import { StyledHeader } from '../styles/';
+import http from '../services/httpService';
 import { getPlaylistInfo } from '../services/spotifyService';
 
 const Playlist = () => {
     const { id: playlist_id } = useParams();
     const [playlist, setPlaylist] = useState(null);
-    // const [playlist, setPlaylist]
+    const [tracks, setTracks] = useState([]);
+    const [tracksData, setTracksData] = useState(null);
 
     useEffect(() => {
-        const getTracks = async () => {
+        const getPlaylistData = async () => {
             const { data } = await getPlaylistInfo(playlist_id);
             setPlaylist(data);
-            console.log(data);
+            setTracksData(data.tracks)
         }
-        getTracks();
+        getPlaylistData();
+
     }, [playlist_id])
+
+    useEffect(() => {
+        if (!tracksData) return;
+
+        const getNextTracks = async () => {
+            if (tracksData.next) {
+                const { data } = await http.get(tracksData.next);
+                setTracksData(data)
+            }
+        }
+
+        const newTracks = tracks => [...tracks, ...tracksData.items]
+        setTracks(newTracks)
+
+        getNextTracks();
+
+    }, [tracksData])
+
+    /**
+     * Array of memoiased tracks 
+     * to adapt to our tracks template  
+    */
+
+    const memoizedTracks = useMemo(() => {
+        if (!tracks) return;
+        return tracks.map(({ track }) => track)
+    }, [tracks])
 
     return (
         <>
@@ -38,7 +68,9 @@ const Playlist = () => {
                     </StyledHeader>
                     <main>
                         <Section title="Playlist" breadcrumb={true}>
-                            <Tracks tracks={playlist.tracks}></Tracks>
+                            {memoizedTracks && (
+                                <Tracks tracks={memoizedTracks}></Tracks>
+                            )}
                         </Section>
                     </main>
                 </>

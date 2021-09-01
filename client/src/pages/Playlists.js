@@ -16,7 +16,6 @@ const Playlists = () => {
         const getPlaylists = async () => {
             const { data } = await getUserPlaylists();
             setPlaylistsData(data);
-            // console.log('playlists: ', playlists);
         }
         getPlaylists();
 
@@ -28,14 +27,13 @@ const Playlists = () => {
      * merge them with our actual playlists array
      */
     useEffect(() => {
-
         if (!playlistsData) return
+
 
         // Returns a new set of 20 playlist items if necessary
         const getNextPlaylists = async () => {
             if (playlistsData.next) {
                 const { data } = await http.get(playlistsData.next)
-                // console.log('playlistsNext: ', playlistsData.next, 'Next Data: ', data);
                 setPlaylistsData(data)
             }
         }

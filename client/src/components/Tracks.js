@@ -2,7 +2,6 @@ import { StyledTracks } from '../styles';
 import { convertToDuration } from '../utils';
 
 const Tracks = ({ tracks }) => {
-    if (tracks && tracks.length) console.log('here: ', tracks)
 
     return (
         <>
