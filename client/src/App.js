@@ -22,20 +22,20 @@ function App() {
       <GlobalStyles />
       <ToastContainer />
       <TopBar />
-      {!token ? (
-        <Login />
-      ) : (
+      {token ? (
         <>
           <Switch>
             <Route path="/top-artists" component={TopArtists} />
             <Route path="/top-tracks" component={TopTracks} />
             <Route path="/playlists/:id" component={Playlist} />
             <Route path="/playlists" component={Playlists} />
-            <Route path="/" >
+            <Route path="/">
               <Profile />
             </Route>
           </Switch>
         </>
+      ) : (
+        <Login />
       )
       }
     </div>

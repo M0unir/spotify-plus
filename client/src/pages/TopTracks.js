@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Section, Tracks, TimeRange } from '../components/'
+import { Section, Tracks, TimeRange, Loader } from '../components/'
 import { getUserTopTracks } from '../services/spotifyService';
 
 const TopTracks = () => {
@@ -17,7 +17,9 @@ const TopTracks = () => {
 
     return (
         <main>
-            {topTracks && (
+            {topTracks ? (
+                <Loader />
+            ) : (
                 <Section title="Top Tracks" breadcrumb="true">
                     <TimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange}></TimeRange>
                     <Tracks tracks={topTracks.items.slice(0, 15)} />

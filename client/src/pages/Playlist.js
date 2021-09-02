@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom';
-import { Section, Tracks } from '../components/';
+import { Section, Tracks, Loader } from '../components/';
 import { StyledHeader } from '../styles/';
 import http from '../services/httpService';
 import { getPlaylistInfo } from '../services/spotifyService';
@@ -50,7 +50,9 @@ const Playlist = () => {
 
     return (
         <>
-            {playlist && playlist.tracks && (
+            {playlist && playlist.tracks ? (
+                <Loader />
+            ) : (
                 <>
                     <StyledHeader>
                         <div className="header__inner">

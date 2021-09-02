@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Section, Artists, TimeRange } from '../components/'
-import { getUserTopArtists } from '../services/spotifyService'
+import { Section, Artists, TimeRange, Loader } from '../components/';
+import { getUserTopArtists } from '../services/spotifyService';
 
 const TopArtists = () => {
 
@@ -17,7 +17,9 @@ const TopArtists = () => {
 
     return (
         <main>
-            {topArtists && (
+            {!topArtists ? (
+                <Loader />
+            ) : (
                 <Section title="Top artists" breadcrumb="true">
                     <TimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange} />
                     <Artists artists={topArtists.items.slice(0, 15)} />

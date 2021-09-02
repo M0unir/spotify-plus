@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import http from '../services/httpService';
-import { Section, PlaylistsGrid } from '../components';
+import { Section, PlaylistsGrid, Loader } from '../components';
 import { getUserPlaylists } from '../services/spotifyService';
 
 const Playlists = () => {
@@ -51,7 +51,9 @@ const Playlists = () => {
 
     return (
         <main>
-            {playlists && (
+            {playlists ? (
+                <Loader />
+            ) : (
                 <Section title="Top Playlists" breadcrumb="true">
                     <PlaylistsGrid playlists={playlists} />
                 </Section>
