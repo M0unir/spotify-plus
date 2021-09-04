@@ -6,23 +6,27 @@ const TopTracks = () => {
 
     const [topTracks, setTopTracks] = useState(null);
     const [activeTimeRange, setActiveTimeRange] = useState('long_term');
+    const [showLoader, setShowLoader] = useState(false);
 
     useEffect(() => {
+        setShowLoader(true)
         const getTopTracks = async () => {
             const { data } = await getUserTopTracks(activeTimeRange);
             setTopTracks(data)
+            setShowLoader(false)
         }
         getTopTracks(activeTimeRange);
+
     }, [activeTimeRange]);
 
     return (
         <main>
-            {topTracks ? (
+            {!topTracks || topTracks.length === 0 ? (
                 <Loader />
             ) : (
                 <Section title="Top Tracks" breadcrumb="true">
                     <TimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange}></TimeRange>
-                    <Tracks tracks={topTracks.items.slice(0, 15)} />
+                    {showLoader ? (<Loader />) : <Tracks tracks={topTracks.items.slice(0, 15)} />}
                 </Section>
             )
             }

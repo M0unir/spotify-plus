@@ -50,7 +50,7 @@ const Playlist = () => {
 
     return (
         <>
-            {playlist && playlist.tracks ? (
+            {!playlist || !playlist.tracks ? (
                 <Loader />
             ) : (
                 <>

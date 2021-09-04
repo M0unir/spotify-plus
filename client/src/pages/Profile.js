@@ -86,8 +86,6 @@ const Profile = () => {
                         </div>
                     </StyledHeader>
                     {topArtists && topTracks && playlists ? (
-                        <Loader />
-                    ) : (
                         <main>
                             <Section title="Top artists of All Time" small="Only visible to you" seeAllLink="/top-artists">
                                 <Artists artists={topArtists.items.slice(0, 8)} />
@@ -99,6 +97,8 @@ const Profile = () => {
                                 <PlaylistsGrid playlists={playlists.items.slice(0, 10)} />
                             </Section>
                         </main>
+                    ) : (
+                        <Loader />
                     )}
                 </>
             )

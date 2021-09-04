@@ -6,11 +6,14 @@ const TopArtists = () => {
 
     const [topArtists, setTopArtists] = useState(null);
     const [activeTimeRange, setActiveTimeRange] = useState('long_term');
+    const [showLoader, setShowLoader] = useState(false);
 
     useEffect(() => {
+        setShowLoader(true)
         const getTopArtists = async () => {
             const { data } = await getUserTopArtists(activeTimeRange);
             setTopArtists(data)
+            setShowLoader(false)
         }
         getTopArtists();
     }, [activeTimeRange])
@@ -22,7 +25,7 @@ const TopArtists = () => {
             ) : (
                 <Section title="Top artists" breadcrumb="true">
                     <TimeRange activeTimeRange={activeTimeRange} setActiveTimeRange={setActiveTimeRange} />
-                    <Artists artists={topArtists.items.slice(0, 15)} />
+                    {showLoader ? <Loader /> : <Artists artists={topArtists.items.slice(0, 15)} />}
                 </Section>
             )
             }
