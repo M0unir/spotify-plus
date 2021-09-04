@@ -159,6 +159,15 @@ const getUserTopArtists = (time_range = 'long_term') => http.get(`/me/top/artist
 
 const getUserTopTracks = (time_range = 'long_term') => http.get(`/me/top/tracks?time_range=${time_range}`)
 
+/**
+ * Get audio features for multiple tracks based on their Spotify IDs.
+ * https://developer.spotify.com/documentation/web-api/reference/#/operations/get-several-audio-features
+ * @param {string} ids a comma-separated list of the Spotify IDs for the tracks
+ * @returns {promise}
+ */
+
+const getTracksAudioFeatures = ids => http.get(`/audio-features?ids=${ids}`)
+
 export {
     accessToken,
     logout,
@@ -167,4 +176,5 @@ export {
     getPlaylistInfo,
     getUserTopArtists,
     getUserTopTracks,
+    getTracksAudioFeatures
 };

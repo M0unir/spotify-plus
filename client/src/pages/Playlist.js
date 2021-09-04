@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom';
 import { Section, Tracks, Loader } from '../components/';
 import { StyledHeader } from '../styles/';
 import http from '../services/httpService';
-import { getPlaylistInfo } from '../services/spotifyService';
+import { getPlaylistInfo, getTracksAudioFeatures } from '../services/spotifyService';
 
 const Playlist = () => {
     const { id: playlist_id } = useParams();
     const [playlist, setPlaylist] = useState(null);
     const [tracks, setTracks] = useState([]);
     const [tracksData, setTracksData] = useState(null);
+    const [audioFeatures, setAudioFeatures] = useState([]);
 
     useEffect(() => {
         const getPlaylistData = async () => {
@@ -21,9 +22,16 @@ const Playlist = () => {
 
     }, [playlist_id])
 
+    /** 
+     * Each time the tracksData Dependency updates
+     * Get new tracks if any and merge them to the array
+     */
     useEffect(() => {
         if (!tracksData) return;
 
+        /**
+         * If other tracks available, fetch them & store them
+         */
         const getNextTracks = async () => {
             if (tracksData.next) {
                 const { data } = await http.get(tracksData.next);
@@ -31,10 +39,18 @@ const Playlist = () => {
             }
         }
 
-        const newTracks = tracks => [...tracks, ...tracksData.items]
-        setTracks(newTracks)
+        /** Get audio features for each track & merge to array */
+        const getAudioFeatures = async () => {
+            const ids = tracksData.items.map(({ track }) => track.id).join(',')
+            const { data } = await getTracksAudioFeatures(ids);
+            setAudioFeatures(audioFeatures => [...audioFeatures, ...data['audio_features']])
+        }
+
+        /** Merge previous and new tracks before fetching for new ones */
+        setTracks(tracks => [...tracks, ...tracksData.items])
 
         getNextTracks();
+        getAudioFeatures();
 
     }, [tracksData])
 
@@ -45,9 +61,26 @@ const Playlist = () => {
 
     const memoizedTracks = useMemo(() => {
         if (!tracks) return;
-        return tracks.map(({ track }) => track)
-    }, [tracks])
 
+        return tracks.map(({ track }) => {
+            // const currentTrack = track;
+
+            if (!track['audio_features']) {
+                const audioFeaturesObj = audioFeatures.find(item => {
+                    if (!item || !track) return null;
+                    return item.id === track.id;
+                });
+                // currentTrack['audio_features'] = audioFeaturesObj
+                return { ...track, 'audio_features': audioFeaturesObj }
+            }
+
+
+            // return currentTrack;
+        })
+
+    }, [tracks, audioFeatures])
+
+    console.log('memoizedTracks: ', memoizedTracks)
     return (
         <>
             {!playlist || !playlist.tracks ? (
