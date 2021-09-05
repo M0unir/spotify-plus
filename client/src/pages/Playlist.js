@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom';
 import { Section, Tracks, Loader } from '../components/';
-import { StyledHeader } from '../styles/';
+import { StyledHeader, StyledDropdown } from '../styles/';
 import http from '../services/httpService';
 import { getPlaylistInfo, getTracksAudioFeatures } from '../services/spotifyService';
 
@@ -11,6 +11,9 @@ const Playlist = () => {
     const [tracks, setTracks] = useState([]);
     const [tracksData, setTracksData] = useState(null);
     const [audioFeatures, setAudioFeatures] = useState([]);
+    const [showLoader, setShowLoader] = useState(false);
+    const [orderBy, setOrderBy] = useState('');
+    const sortOptions = ['Acousticness', 'Danceability', 'Energy', 'Instrumentalness', 'Liveness', 'Loudness', 'Speechiness', 'Tempo', 'Valence']
 
     useEffect(() => {
         const getPlaylistData = async () => {
@@ -28,6 +31,7 @@ const Playlist = () => {
      */
     useEffect(() => {
         if (!tracksData) return;
+        setShowLoader(true)
 
         /**
          * If other tracks available, fetch them & store them
@@ -36,6 +40,8 @@ const Playlist = () => {
             if (tracksData.next) {
                 const { data } = await http.get(tracksData.next);
                 setTracksData(data)
+            } else {
+                setShowLoader(false)
             }
         }
 
@@ -55,32 +61,48 @@ const Playlist = () => {
     }, [tracksData])
 
     /**
-     * Array of memoiased tracks 
-     * to adapt to our tracks template  
+     * Array of memoiased tracks to adapt to our tracks template  
+     * We merge audio features to our exisiting tracks array.
     */
 
-    const memoizedTracks = useMemo(() => {
+    const tracksWithAudioFeatures = useMemo(() => {
         if (!tracks) return;
 
         return tracks.map(({ track }) => {
-            // const currentTrack = track;
-
             if (!track['audio_features']) {
                 const audioFeaturesObj = audioFeatures.find(item => {
                     if (!item || !track) return null;
                     return item.id === track.id;
                 });
-                // currentTrack['audio_features'] = audioFeaturesObj
                 return { ...track, 'audio_features': audioFeaturesObj }
-            }
-
-
-            // return currentTrack;
+            } else return null;
         })
 
     }, [tracks, audioFeatures])
+    console.log('tracks: ', tracksWithAudioFeatures)
 
-    console.log('memoizedTracks: ', memoizedTracks)
+    /**
+     * Sort Tracks by Audio Features each time onChange is called.
+     */
+    const sortedTracks = useMemo(() => {
+        if (!tracksWithAudioFeatures) return null;
+
+        return [...tracksWithAudioFeatures].sort((a, b) => {
+            const firstTrack = a['audio_features'];
+            const secondTrack = b['audio_features'];
+
+            if (!firstTrack || !secondTrack) {
+                return false;
+            }
+            return secondTrack[orderBy] - firstTrack[orderBy];
+        });
+
+        // if (sorted.length === tracksWithAudioFeatures.length) console.log('Done sorting!')
+        // return sorted;
+
+    }, [orderBy, tracksWithAudioFeatures]);
+    console.log('sorted: ', sortedTracks)
+
     return (
         <>
             {!playlist || !playlist.tracks ? (
@@ -103,8 +125,24 @@ const Playlist = () => {
                     </StyledHeader>
                     <main>
                         <Section title="Playlist" breadcrumb={true}>
-                            {memoizedTracks && (
-                                <Tracks tracks={memoizedTracks}></Tracks>
+                            <>
+                                <label htmlFor="sort-tracks-by"></label>
+                                <StyledDropdown active={!!orderBy}>
+                                    <select
+                                        name="tracks-order"
+                                        id="sort-tracks-by"
+                                        onChange={e => setOrderBy(e.target.value)}
+                                    >
+                                        <option value="">Sort tracks</option>
+                                        {sortOptions.map((sortOption, idx) => (
+                                            <option value={sortOption.toLowerCase()} key={idx}>{sortOption}</option>
+                                        ))
+                                        }
+                                    </select>
+                                </StyledDropdown>
+                            </>
+                            {sortedTracks && (
+                                showLoader ? <Loader /> : <Tracks tracks={sortedTracks}></Tracks>
                             )}
                         </Section>
                     </main>
