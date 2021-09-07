@@ -12,14 +12,12 @@ const variables = css`
     --green-dark: #14833b;
     --white: #fff;
     --red: #cd1a2b;
-
     --black: #121212;
     --near-black: #181818;
     --dark-grey: #282828;
     --grey: #535353;
     --light-grey: #b3b3b3;
-    --white: #ffffff;
-    --green: #1DB954;
+    --white: #FFFFFF;
 
     /* Light Theme */
     /* Later.. */
