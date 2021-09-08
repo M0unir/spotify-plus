@@ -65,7 +65,7 @@ const GlobalStyle = createGlobalStyle`
     border-radius: var(--border-radius-pill);
     background-color: rgba(0,0,0,.7);
     color: var(--white);
-    font-size: var(--fz-sm);
+    font-size: var(--font-size-sm);
     font-weight: 700;
     padding: var(--spacing-xs) var(--spacing-sm);
 
@@ -115,7 +115,7 @@ const GlobalStyle = createGlobalStyle`
 
   .empty-notice {
     color: var(--grey);
-    font-size: var(--fz-lg);
+    font-size: var(--font-size-lg);
     text-align: center;
     padding: var(--spacing-xxl);
   }

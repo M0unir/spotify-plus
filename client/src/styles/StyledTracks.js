@@ -12,7 +12,7 @@ const StyledTrackList = styled.ul`
     grid-gap: var(--spacing-md);
     padding: var(--spacing-xs);
     color: var(--light-grey);
-    font-size: var(--fz-sm);
+    font-size: var(--font-size-sm);
     border-radius: var(--border-radius-subtle);
     transition: background-color 0.3s ease;
     cursor: default;
@@ -32,7 +32,7 @@ const StyledTrackList = styled.ul`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    font-size: var(--fz-md);
+    font-size: var(--font-size-md);
     font-variant-numeric: tabular-nums;
     overflow: visible;
   }
@@ -52,7 +52,7 @@ const StyledTrackList = styled.ul`
 
   .track__item__name {
     color: var(--white);
-    font-size: var(--fz-md);
+    font-size: var(--font-size-md);
   }
 
   .track__item__album {

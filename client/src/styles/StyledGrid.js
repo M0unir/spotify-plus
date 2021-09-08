@@ -66,12 +66,12 @@ const StyledGrid = styled.ul`
 
   .grid__item__name {
     margin: 0 0 var(--spacing-xxs);
-    font-size: var(--fz-md);
+    font-size: var(--font-size-md);
     letter-spacing: normal;
   }
 
   .grid__item__label {
-    font-size: var(--fz-sm);
+    font-size: var(--font-size-sm);
     color: var(--light-grey);
   }
 `;

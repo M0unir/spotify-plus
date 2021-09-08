@@ -29,7 +29,7 @@ const StyledDropdown = styled.div`
     color: white;
     border: 0;
     border-radius: var(--border-radius-subtle);
-    font-size: var(--fz-sm);
+    font-size: var(--font-size-sm);
     font-family: inherit;
     padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-sm);
   }

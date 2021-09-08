@@ -29,7 +29,7 @@ const StyledSection = styled.section`
   .section__heading {
     display: flex;
     margin: 0;
-    font-size: var(--fz-xxl);
+    font-size: var(--font-size-xxl);
   }
 
   .section__breadcrumb {
@@ -55,7 +55,7 @@ const StyledSection = styled.section`
     align-items: flex-end;
     text-transform: uppercase;
     color: var(--light-grey);
-    font-size: var(--fz-xxs);
+    font-size: var(--font-size-xxs);
     font-weight: 700;
     letter-spacing: 0.1em;
     padding-bottom: 2px;
