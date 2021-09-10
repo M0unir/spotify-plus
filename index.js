@@ -4,13 +4,13 @@ const qs = require('qs');
 const { generateRandomString } = require('./utils.js');
 const app = express();
 const axios = require('axios');
-const port = 8080;
 
 /** Getting Environment Variables */
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 const REDIRECT_URI = process.env.REDIRECT_URI
 const CLIENT_URI = process.env.CLIENT_URI
+const PORT = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
     res.send('Spotify Plus')
@@ -101,6 +101,6 @@ app.get('/refresh_token', (req, res) => {
         });
 });
 
-app.listen(port, () => {
-    console.log(`App listening at http://localhost:${port}`)
+app.listen(PORT, () => {
+    console.log(`App listening at http://localhost:${PORT}`)
 })
