@@ -24,14 +24,14 @@ const StyledLoginButton = styled.a`
   }
 `
 
-console.log('env: ', process.env.REACT_APP_FRONT_END_URI)
+console.log('env: ', process.env)
 
 const Login = () => {
     return (
         <StyledLoginContainer>
             <StyledLoginButton
                 className="App-link"
-                href={process.env.REACT_APP_FRONT_END_URI}
+                href={process.env.REACT_APP_LOGIN_URI}
                 rel="noopener noreferrer"
             >
                 Login to Spotify

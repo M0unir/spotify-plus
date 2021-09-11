@@ -1,4 +1,5 @@
-require('dotenv').config({ path: '.env.development' })
+require('dotenv').config();
+
 const express = require('express');
 const qs = require('qs');
 const { generateRandomString } = require('./utils.js');
