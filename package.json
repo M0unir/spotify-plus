@@ -3,11 +3,20 @@
   "version": "1.0.0",
   "description": "web app to visualize personalized Spotify Data",
   "main": "index.js",
+  "engines": {
+    "node": "14.15.0"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
   "scripts": {
     "start": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "server": "nodemon index.js",
     "client": "cd client && yarn start",
     "postinstall": "cd client && yarn install",
+    "build": "NODE_EN=production cd client/ && yarn install & yarn run build",
+    "start-server": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
