@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const path = require('path');
 const express = require('express');
 const qs = require('qs');
 const { generateRandomString } = require('./utils.js');
@@ -12,6 +13,9 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET
 const REDIRECT_URI = process.env.REDIRECT_URI
 const CLIENT_URI = process.env.CLIENT_URI
 const PORT = process.env.PORT || 8080;
+
+/** Serve our react client static files first */
+app.use(express.static(path.resolve(__dirname, './client/build')));
 
 app.get('/', (req, res) => {
     res.send('Spotify Plus')
@@ -101,6 +105,11 @@ app.get('/refresh_token', (req, res) => {
             res.send(error);
         });
 });
+
+/** Catch any other unhandled routes and redirect to our client to handle it (404 error page)  */
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build'), 'index.html')
+})
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`)
