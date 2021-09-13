@@ -18,4 +18,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-yarn.lock
+# yarn.lock (Uncommited to allow Heroku Buildpack to install yarn) 
