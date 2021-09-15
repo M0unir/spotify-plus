@@ -24,8 +24,6 @@ const StyledLoginButton = styled.a`
   }
 `
 
-console.log('env: ', process.env)
-
 const Login = () => {
     return (
         <StyledLoginContainer>
