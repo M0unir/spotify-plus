@@ -47,7 +47,7 @@ const Playlist = () => {
 
         /** Get audio features for each track & merge to array */
         const getAudioFeatures = async () => {
-            const ids = tracksData.items.map(({ track }) => track.id).join(',')
+            const ids = tracksData.items.filter(({ track }) => !!track).map(({ track }) => track.id)
             const { data } = await getTracksAudioFeatures(ids);
             setAudioFeatures(audioFeatures => [...audioFeatures, ...data['audio_features']])
         }
@@ -68,7 +68,7 @@ const Playlist = () => {
     const tracksWithAudioFeatures = useMemo(() => {
         if (!tracks) return;
 
-        return tracks.map(({ track }) => {
+        return tracks.filter(({ track }) => !!track).map(({ track }) => {
             if (!track['audio_features']) {
                 const audioFeaturesObj = audioFeatures.find(item => {
                     if (!item || !track) return null;
@@ -79,7 +79,6 @@ const Playlist = () => {
         })
 
     }, [tracks, audioFeatures])
-    console.log('tracks: ', tracksWithAudioFeatures)
 
     /**
      * Sort Tracks by Audio Features each time onChange is called.
@@ -97,11 +96,7 @@ const Playlist = () => {
             return secondTrack[orderBy] - firstTrack[orderBy];
         });
 
-        // if (sorted.length === tracksWithAudioFeatures.length) console.log('Done sorting!')
-        // return sorted;
-
     }, [orderBy, tracksWithAudioFeatures]);
-    console.log('sorted: ', sortedTracks)
 
     return (
         <>
