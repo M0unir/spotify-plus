@@ -3,7 +3,7 @@
 <img src="./client/public/spotify-plus.png" alt="Spotify Plus web app" />
 
 <p align="center">
-<a href="https://spotify-plus.herokuapp.com/"> Check it out!</a> 
+<a target="_blank" href="https://spotify-plus.herokuapp.com/"> Check it out!</a> 
 </p>
 
 >Spotify Plus is a web app clone of your spotify profile that adds additional features to help visualize personalized Spotify Data. Login with your spotify account and get extra stats like:
