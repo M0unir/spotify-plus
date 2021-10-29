@@ -48,7 +48,7 @@ const hasTokenExpired = () => {
  * Then stores the new token in localStorage & reloads the page. 
  * @returns {void}
  */
-const refreshToken = () => {
+const refreshToken = async () => {
     try {
         // If no refresh token available, log the user out 
         if (!SPOTIFY_LOCALSTORAGE_VALUES['refreshToken']
@@ -56,20 +56,20 @@ const refreshToken = () => {
             || (Date.now() - SPOTIFY_LOCALSTORAGE_VALUES['timestamp']) / 1000 < 1000) {
             logout()
         }
-        fetch(`/refresh_token?refresh_token=${SPOTIFY_LOCALSTORAGE_VALUES['refreshToken']}`)
-            .then(response => response.json())
-            .then(data => {
-                window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['accessToken'], data.access_token);
-                window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['timestamp'], Date.now())
 
-                // Reload the page
-                window.location = window.location.reload();
-            })
+        // Request a refreshed token from our node backend
+        const { data } = await http.get(`/refresh_token?refresh_token=${SPOTIFY_LOCALSTORAGE_VALUES['refreshToken']}`);
+
+        // Update localStorage values
+        window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['accessToken'], data.access_token);
+        window.localStorage.setItem(SPOTIFY_LOCALSTORAGE_KEYS['timestamp'], Date.now())
+
+        // Reload the page so new localStorage values take effect 
+        window.location = window.location.reload();
 
     } catch (e) {
         console.log('Could not refresh token: ', e)
     }
-
 }
 
 /**

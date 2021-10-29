@@ -22,7 +22,7 @@ const variables = css`
     /* Light Theme */
     /* Later.. */
 
-    --font: 'Circular Std', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    --font: ${process.env.REACT_APP_USE_CIRCULAR_FONTS ? `'Circular Std', ` : ``} -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
 

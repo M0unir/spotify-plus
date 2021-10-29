@@ -17,10 +17,6 @@ const PORT = process.env.PORT || 8080;
 /** Serve our react client static files first */
 app.use(express.static(path.resolve(__dirname, './client/build')));
 
-app.get('/', (req, res) => {
-    res.send('Spotify Plus')
-})
-
 /** 
  *  Spotify Authorization:
  *  https://developer.spotify.com/documentation/general/guides/authorization-guide/ 
@@ -74,10 +70,10 @@ app.get('/redirect_callback', (req, res) => {
                     expires_in
                 })
 
-                res.redirect(`${CLIENT_URI}?${queryParams}`)
+                res.redirect(`${CLIENT_URI}/?${queryParams}`);
 
             } else {
-                res.redirect(`/?${qs.stringify({ error: 'invalid token' })}`)
+                res.redirect(`/?${qs.stringify({ error: 'invalid_token' })}`);
             }
         })
         .catch(error => {
@@ -108,7 +104,7 @@ app.get('/refresh_token', (req, res) => {
 
 /** Catch any other unhandled routes and redirect to our client to handle it (404 error page)  */
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './client/build'), 'index.html')
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
 })
 
 app.listen(PORT, () => {
