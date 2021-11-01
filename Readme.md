@@ -36,10 +36,25 @@
     ```shell
      yarn install
     ```
-5. Run the project *(This will run both the server & the client)*
+6. Rename <code>.env.example</code> to <code>.env</code>, then replace <code>CLIENT_ID</code> & <code>CLIENT_SECRET</code> with your own credentials from your Spotify Dashboard.
+   
+7. Rename <code>client/.env.development.example</code> to <code>client/.env.development</code>
+8. Build the project
+9. 
+    ```shell
+     yarn build
+    ```
+10. Run the project *(This will run both the server & the client)*
    
     ```shell
      yarn start
     ```
 
-( MIT License )
+ ## Optional
+
+ If you have Circular Fonts (used by Spotify) you could add them to <code>public/fonts/Circular/</code>.
+ Then swicth this in <code>client/.env.development</code> or <code>client/.env.production</code>:
+
+ ```
+ REACT_APP_USE_CIRCULAR_FONTS=true
+ ```
