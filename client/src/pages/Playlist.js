@@ -110,7 +110,7 @@ const Playlist = () => {
                                 <img className="header__img" src={playlist.images[0].url} alt="Avatar" />
                             )}
                             <div>
-                                <div className="header__overline">Profile</div>
+                                <div className="header__overline">Playlist</div>
                                 <h1 className="header__name">{playlist.name}</h1>
                                 <p className="header__meta">
                                     <span>{playlist.tracks.total} song{(playlist.tracks.total !== 1) ? 's' : ''}</span>
