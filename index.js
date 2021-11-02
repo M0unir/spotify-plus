@@ -14,9 +14,6 @@ const REDIRECT_URI = process.env.REDIRECT_URI
 const CLIENT_URI = process.env.CLIENT_URI
 const PORT = process.env.PORT || 8080;
 
-/** Serve our react client static files first */
-app.use(express.static(path.resolve(__dirname, './client/build')));
-
 /** 
  *  Spotify Authorization:
  *  https://developer.spotify.com/documentation/general/guides/authorization-guide/ 
@@ -102,10 +99,15 @@ app.get('/refresh_token', (req, res) => {
         });
 });
 
-/** Catch any other unhandled routes and redirect to our client to handle it (404 error page)  */
-app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-})
+if (process.env.NODE_ENV === 'production') {
+    /** Serve our react client static files first */
+    app.use(express.static(path.resolve(__dirname, './client/build')));
+
+    /** Catch any other unhandled routes and redirect to our client to handle it (404 error page)  */
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+    })
+}
 
 app.listen(PORT, () => {
     console.log(`App listening at http://localhost:${PORT}`)
