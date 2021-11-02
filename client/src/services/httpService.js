@@ -1,5 +1,6 @@
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import axios from 'axios';
+import logger from './logger';
+import { toast } from 'react-toastify';
 
 /**
  * Axios Global Error Handling using interceptors
@@ -16,12 +17,14 @@ axios.interceptors.response.use(null, error => {
     // => Dislay generic/friendly error message
     if (!ExpectedError) {
         // alert('Unexpected error: ', error);
+        logger.log(error);
         toast.error(`An Unexpected Error occured. ${error}`)
     }
 
     // If Expected Errors (Client Errors => 404: not found, 400: Bad Request)
     // => Display Specific Errors (Post not found etc..)
     // Handle Expected errors in Component
+    logger.log(error);
     console.log(error.response)
     // toast.error(<div>Couldn't reach {error.response.request.responseURL} .<br />Status:  {error.response.data.error.status}.<br />Reason: {error.response.data.error.message}</div>);
 

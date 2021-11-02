@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/M0unir/spotify-plus/issues"
   },
-  "homepage": "https://github.com/M0unir/spotify-plus#readme",
+  "homepage": "https://spotify-plus.herokuapp.com/",
   "dependencies": {
     "axios": "^0.22.0",
     "concurrently": "^6.3.0",

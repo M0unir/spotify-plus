@@ -26,7 +26,7 @@
     ```
 3. Make sure you have [nvm](https://github.com/nvm-sh/nvm) and [yarn](https://www.yarnpkg.com/) installed globally
 
-4. Install the node version specified in the provided .nvrmc file.
+4. Install the node version specified in the provided <code>.nvrmc</code> file
    
     ```shell
      nvm install
@@ -39,22 +39,40 @@
 6. Rename <code>.env.example</code> to <code>.env</code>, then replace <code>CLIENT_ID</code> & <code>CLIENT_SECRET</code> with your own credentials from your Spotify Dashboard.
    
 7. Rename <code>client/.env.development.example</code> to <code>client/.env.development</code>
-8. Build the project
-9. 
-    ```shell
-     yarn build
-    ```
-10. Run the project *(This will run both the server & the client)*
+8. Run the project *(This will run both the server & the client)*
    
     ```shell
      yarn start
     ```
 
- ## Optional
+## Optional
 
- If you have Circular Fonts (used by Spotify) you could add them to <code>public/fonts/Circular/</code>.
- Then swicth this in <code>client/.env.development</code> or <code>client/.env.production</code>:
+### Fonts
+If you have Circular Fonts (used by Spotify) you could add them to <code>public/fonts/Circular/</code>.
+Then change this in <code>client/.env.development</code> or <code>client/.env.production</code>:
 
- ```
+```shell
  REACT_APP_USE_CIRCULAR_FONTS=true
- ```
+```
+
+### Meta tags & Open Graph tags
+You could either set your <code>%PUBLIC_URL%</code> in <code>client/public/index.html</code> manually or for a more dynamic approach, from the <a target="_blank" href="https://create-react-app.dev/docs/advanced-configuration/">docs</a>, set the homepage key to your published app url
+
+```json
+ {
+ // ....
+  "homepage": "https://example.com",
+ // ...
+ }
+```
+It is also possible to set <code>PUBLIC_URL</code> in your production environment or prepend it to your build command:
+   
+```shell
+ PUBLIC_URL="https://example.com" yarn build
+```
+
+### Logging Errors for production
+You can use <a href="https://sentry.io/" target="_blank">sentry.io</a> to capture errors in production
+```shell
+ REACT_APP_SENTRY_API_KEY="ADD_YOUR_SENTRY_API_KEY"
+```

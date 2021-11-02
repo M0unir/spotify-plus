@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
+import logger from './services/logger';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+console.log('?', process.env)
+if (process.env.REACT_APP_SENTRY_API_KEY && process.env.REACT_APP_SENTRY_API_KEY.length > 1) logger.init();
 
 ReactDOM.render(
   <React.StrictMode>
