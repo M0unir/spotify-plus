@@ -45,7 +45,6 @@
      yarn start
     ```
 
-<<<<<<< HEAD
 ## Optional
 
 ### Fonts
@@ -61,9 +60,7 @@ You could either set your <code>%PUBLIC_URL%</code> in <code>client/public/index
 
 ```json
  {
- // ....
   "homepage": "https://example.com",
- // ...
  }
 ```
 It is also possible to set <code>PUBLIC_URL</code> in your production environment or prepend it to your build command:
