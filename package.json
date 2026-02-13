@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "web app to visualize personalized Spotify Data",
   "main": "index.js",
-  "engines": {
-    "node": "14.15.0"
-  },
   "cacheDirectories": [
     "node_modules",
     "client/node_modules"
