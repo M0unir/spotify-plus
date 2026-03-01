@@ -26,8 +26,9 @@ axios.interceptors.response.use(null, error => {
     // Handle Expected errors in Component
     logger.log(error);
     console.log(error.response)
-    // toast.error(<div>Couldn't reach {error.response.request.responseURL} .<br />Status:  {error.response.data.error.status}.<br />Reason: {error.response.data.error.message}</div>);
-
+    const fullUrl = error.response.request.responseURL;
+    const truncatedUrl = fullUrl.length > 60 ? `${fullUrl.slice(0, 60)}…` : fullUrl;
+    toast.error(<div>Couldn't reach <span title={fullUrl}>{truncatedUrl}</span>.<br />Status: {error.response.data.error.status}.<br />Reason: {error.response.data.error.message || 'Unknown'}</div>);
 
     return Promise.reject(error);
 });

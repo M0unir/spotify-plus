@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components/macro";
-import variables from './variables';
-import fonts from './fonts'
+import variables from "./variables";
+import fonts from "./fonts";
 
 const GlobalStyle = createGlobalStyle`
     ${fonts}
@@ -120,6 +120,31 @@ const GlobalStyle = createGlobalStyle`
     padding: var(--spacing-xxl);
   }
 
-`;
+  .Toastify__toast-container {
+  width: fit-content;
+  max-width: 600px;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  .Toastify__toast {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font);
+    font-size: var(--font-size-sm);
+    border-radius: var(--border-radius-pill);
+    border: 1px solid var(--white);
+    box-shadow: 0 0 10px rgba(255,255,255,.2);
+
+    .Toastify__toast--default {
+      background: var(--black);
+      color: var(--white);
+      
+    }
+
+    .Toastify__toast--error {
+      background: var(--red);
+      color: var(--white);
+    }
+  }
+}`;
 
 export default GlobalStyle;
